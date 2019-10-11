@@ -1,3 +1,18 @@
+<<<<<<< HEAD
+$(function(){
+	$("#submit").click(function(){
+		$.ajax({
+			type:"post",
+			url:"login/"+$("#username").val()+"/"+$("#password").val(),
+			data:{},
+			dataType:"json",
+			success:function(data){
+				
+			}
+		})
+	})
+})
+=======
 
 
 $(function(){
@@ -24,3 +39,4 @@ $(function(){
 	
 	
 })
+>>>>>>> branch 'master' of https://github.com/HaloFaction/RMS

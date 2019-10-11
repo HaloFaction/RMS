@@ -1,0 +1,32 @@
+#login{
+			width: 400px;
+			height: 260px;
+			background-color: gray;
+			background:rgba(0,0,0,0.5);
+			margin-top: 150px;
+			margin-left: 500px;
+			border-radius:30px
+		}
+		label{
+			color: white;
+		}
+		.form-control{
+			width: 300px;
+		}
+		#f1{
+			padding-top: 40px;
+			margin-left: 50px;
+		}
+		.btn{
+			width: 80px;
+			margin-left: 50px;
+		}
+		body{
+			background-repeat:no-repeat;
+			background-size: 100% 100%;
+			background-attachment: fixed;
+		}
+		h1{
+			color: white;
+			margin-left: 50px;
+		}
