@@ -6,6 +6,13 @@ public class FoodInfo {
 	private int kind;
 	private String pic;
 	private int Price;
+	private FoodKind foodkind;
+	public FoodKind getFoodkind() {
+		return foodkind;
+	}
+	public void setFoodkind(FoodKind foodkind) {
+		this.foodkind = foodkind;
+	}
 	public int getId() {
 		return id;
 	}

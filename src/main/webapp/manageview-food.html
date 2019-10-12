@@ -18,6 +18,22 @@
 					$("#userName").html("豆腐");
 				});
 				// 公共部分--止
+				
+				$.ajax({
+					type:"post",
+					url:"getAllFood",
+					data:{},
+					dataType:"json",
+					success:function(data){
+						
+						console.log(data);
+						
+					}
+					
+				});
+				
+				
+				
 			})
 		</script>
 	</head>
@@ -29,14 +45,19 @@
 				<div id="nav-list"></div>
 				<!-- 自定义导航栏组件 -->
 				<div id="differentPart">
-					
+					<ul class="nav navbar-nav nav-pills">
+					<li class="active"><a href="#">所有食品<span class="sr-only">(current)</span></a></li>
+						<li><a href="#">肉类</a></li>
+						<li><a href="#">汤类</a></li>
+						<li><a href="#">酒水类</a></li>
+						</ul>
 				</div>
 				<!-- 登出 -->
 				<div id="nav-end"></div>
 			</div>
 		</nav>
 		<!-- 主体 -->
-		<div></div>
+		<div id="main"></div>
 
 	</body>
 </html>
