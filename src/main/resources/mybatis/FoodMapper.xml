@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.res.model.mapper.FoodMapper"  >
+	
+	<select id="getAllFood"  resultMap="foodlist" >
+		select * from foodinfo fi,foodkind fk where fi.kind=fk.id
+	</select>
+	<resultMap type="FoodInfo" id="foodlist">
+		<result property="id" column="id"/>
+		<result property="fname" column="fname"/>
+		<result property="pic" column="pic"/>
+		<result property="Price" column="Price"/>
+		<association property="foodkind" column="kind" javaType="FoodKind" resultMap="kindResult" ></association>
+		
+	</resultMap>
+  <resultMap type="FoodKind" id="kindResult">
+		<result property="fkname" column="fkname"/>
+	</resultMap>
+</mapper>

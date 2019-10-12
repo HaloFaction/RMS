@@ -5,8 +5,16 @@ public class OrderMenu {
 	private int orderid;
 	private int fno;
 	private int fnum;
+	private int kid;
 	private String remarks;
 	private int status;
+	
+	public int getKid() {
+		return kid;
+	}
+	public void setKid(int kid) {
+		this.kid = kid;
+	}
 	public int getId() {
 		return id;
 	}
