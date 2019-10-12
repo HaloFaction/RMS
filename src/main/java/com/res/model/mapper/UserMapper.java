@@ -1,7 +1,11 @@
 package com.res.model.mapper;
 
+import java.util.Map;
+
+import com.res.model.bean.User;
+
 public interface UserMapper {
 	
-	public String login(String username,String password);
+	public User login(Map<String, Object> map);
 	
 }
