@@ -1,0 +1,34 @@
+body{
+	background-image: url(../image/background.jpg);
+	background-size: cover;
+}
+.col-md-3{
+			text-align:center;
+			margin-top:6px;
+			position:relative;
+			
+		}
+		p{
+		text-align:center;
+		
+		}
+		
+		img{
+			width:200px;
+			height:200px;
+		}
+.glyphicon{
+	position:absolute;
+	top:0px;
+	right:80px;
+	display:none;
+	color:red;
+}
+#insertfood,#updatefood{
+	display:none;
+	margin-left:650px;
+}
+#kind2,#ff2{
+	
+	display:none;
+}
