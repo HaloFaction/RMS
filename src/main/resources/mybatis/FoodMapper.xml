@@ -9,13 +9,41 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	<resultMap type="FoodInfo" id="foodlist">
 		<result property="id" column="id"/>
+		<result property="kind" column="kind"/>
 		<result property="fname" column="fname"/>
 		<result property="pic" column="pic"/>
-		<result property="Price" column="Price"/>
+		<result property="price" column="price"/>
 		<association property="foodkind" column="kind" javaType="FoodKind" resultMap="kindResult" ></association>
 		
 	</resultMap>
   <resultMap type="FoodKind" id="kindResult">
 		<result property="fkname" column="fkname"/>
 	</resultMap>
+	<select id="getHotFood" resultMap="foodlist">
+	 select * from foodinfo fi,foodkind fk where fi.kind=fk.id and fi.kind=1
+	</select>
+	<select id="getIceFood" resultMap="foodlist">
+	 select * from foodinfo fi,foodkind fk where fi.kind=fk.id and fi.kind=3
+	</select>
+	<select id="getSweetFood" resultMap="foodlist">
+	 select * from foodinfo fi,foodkind fk where fi.kind=fk.id and fi.kind=5
+	</select>
+	<select id="getSopeFood" resultMap="foodlist">
+	select * from foodinfo fi,foodkind fk where fi.kind=fk.id and fi.kind=4
+	</select>
+	<select id="getDrinkFood" resultMap="foodlist">
+	select * from foodinfo fi,foodkind fk where fi.kind=fk.id and fi.kind=2
+	</select>
+	<delete id="deleteFoodInfo" parameterType="int">
+	delete from foodinfo where id=#{id}
+	</delete>
+	<select id="getFoodKind" resultType="FoodKind">
+	select * from foodkind
+	</select>
+	<insert id="insertFoodInfo" parameterType="FoodInfo">
+	insert into foodinfo (fname,kind,pic,price) values (#{fname},#{kind},#{pic},#{price})
+	</insert>
+	<update id="updateFoodInfo" parameterType="FoodInfo">
+	update foodinfo set fname=#{fname},kind=#{kind},pic=#{pic},price=#{price} where id=#{id}
+	</update>
 </mapper>

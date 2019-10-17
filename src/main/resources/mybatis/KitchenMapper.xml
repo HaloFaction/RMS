@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.res.model.mapper.KitchenMapper">
+	<select id="getAllKitchens"  resultMap="kitchenResult">
+		select * from kitchen k left join  ordermenu o on k.id = o.kid 
+	</select>
+	<resultMap type="Kitchen" id="kitchenResult">
+		<result property="id" column="id"/>
+		<result property="kname" column="kname"/>
+		<collection property="orderMenu" ofType="OrderMenu">
+			<result property="id" column="id"/>
+			<result property="kid" column="kid"/>
+			<result property="orderid" column="orderid"/>
+			<result property="fno" column="fno"/>
+			<result property="fnum" column="fnum"/>
+			<result property="remarks" column="remarks"/>
+			<result property="status" column="status"/>
+		</collection>
+	</resultMap>
+	
+	<select id="getAllCooker" resultMap="empResult">
+		select * from 
+		emp e,user u
+		where e.id = u.eno
+	</select>
+	<resultMap type="Emp" id="empResult">
+		<result property="id" column="id"/>
+		<result property="ename" column="ename"/>
+		<result property="sex" column="sex"/>
+		<result property="birthday" column="birthday"/>
+		<result property="idcard" column="idcard"/>
+		<result property="phone" column="phone"/>
+		<result property="address" column="address"/>
+		<result property="dno" column="dno"/>
+		<result property="jno" column="jno"/>
+		<result property="mgr" column="mgr"/>
+		<result property="hiredate" column="hiredate"/>
+		<result property="sal" column="sal"/>
+		<result property="comm" column="comm"/>
+		<association property="user" javaType="User" column="eno" resultMap="userResult"></association>
+	</resultMap>
+	<resultMap type="User" id="userResult">
+		<result property="userid" column="userid"/>
+		<result property="eno" column="eno"/>
+		<result property="password" column="password"/>
+		<result property="role" column="role"/>
+	</resultMap>
+	
+	
+	<select id="getMaxKid" resultType="int">
+		select max(id)+1 from kitchen;
+	</select>
+	
+	<select id="getKitchen" parameterType="int" resultMap="kitchenResult">
+		select * from kitchen k  left join  ordermenu o on o.kid = k.id where k.id = #{kid}
+	</select>
+	
+	
+	<select id="getMenusByKid" parameterType="int" resultMap="orderMenuResult">
+		select * from ordermenu o,foodinfo f where o.kid = #{kid} and o.fno = f.id
+	</select>
+	<resultMap type="OrderMenu" id="orderMenuResult">
+		<result property="id" column="id"/>
+		<result property="kid" column="kid"/>
+		<result property="orderid" column="orderid"/>
+		<result property="fno" column="fno"/>
+		<result property="fnum" column="fnum"/>
+		<result property="remarks" column="remarks"/>
+		<result property="status" column="status"/>
+		<association property="foodInfo" javaType="FoodInfo" column="fno" resultMap="foodInfoResult"></association>
+	</resultMap>
+	<resultMap type="FoodInfo" id="foodInfoResult">
+		<result property="id" column="id"/>
+		<result property="fname" column="fname"/>
+		<result property="kind" column="kind"/>
+		<result property="pic" column="pic"/>
+		<result property="price" column="price"/>
+	</resultMap>
+	
+	
+	<update id="changeStatus" >
+		update ordermenu set status = '已完成制作' 
+		where id in
+		<foreach collection="array" item="id" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</update>
+	
+	<update id="deleteOrderMenu" parameterType="int">
+		update ordermenu set status = '无法制作' 
+		where id  = #{id}
+	</update>
+	
+	<insert id="addKitchen" parameterType="map">
+		insert into kitchen(kname,user) values(#{kname},#{empid})
+	</insert>
+	<!-- 获取还未分配到厨位的菜单 -->
+	<select id="getOrderMenus" resultMap="orderMenuResult">
+		select * from ordermenu o,foodinfo f where o.fno = f.id and o.status = '制作中' and o.kid is null; 
+	</select>
+	
+	<update id="updateOrderMenu" parameterType="map">
+		update ordermenu set fnum = fnum - #{num} where id = #{id}
+	</update>
+	
+	<insert id="addChangedOrderMenu" parameterType="map">
+		insert into ordermenu (kid,orderid,fno,fnum,remarks,status)
+		values(#{kid},(select orderid from (select * from ordermenu) o where o.id=#{id}),
+		(select fno from (select * from ordermenu) o where o.id=#{id}),#{num},
+		(select remarks from (select * from ordermenu) o where o.id=#{id}),
+		(select status from (select * from ordermenu) o where o.id=#{id})
+		)
+	</insert>
+	
+	<delete id="deleteOrderMenuOfinvalid">
+		delete from ordermenu where fnum = 0;
+	</delete>
+</mapper>

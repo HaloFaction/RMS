@@ -5,7 +5,7 @@ public class FoodInfo {
 	private String fname;
 	private int kind;
 	private String pic;
-	private int Price;
+	private int price;
 	private FoodKind foodkind;
 	public FoodKind getFoodkind() {
 		return foodkind;
@@ -38,9 +38,9 @@ public class FoodInfo {
 		this.pic = pic;
 	}
 	public int getPrice() {
-		return Price;
+		return price;
 	}
 	public void setPrice(int price) {
-		Price = price;
+		this.price = price;
 	}
 }

@@ -7,7 +7,9 @@ public class OrderMenu {
 	private int fnum;
 	private int kid;
 	private String remarks;
-	private int status;
+	private String status;
+	// 一条order对应一个菜品,故添加一个FoodInfo类  修改人：ylh
+	private FoodInfo foodInfo;
 	
 	public int getKid() {
 		return kid;
@@ -45,11 +47,18 @@ public class OrderMenu {
 	public void setRemarks(String remarks) {
 		this.remarks = remarks;
 	}
-	public int getStatus() {
+	
+	public String getStatus() {
 		return status;
 	}
-	public void setStatus(int status) {
+	public void setStatus(String status) {
 		this.status = status;
+	}
+	public FoodInfo getFoodInfo() {
+		return foodInfo;
+	}
+	public void setFoodInfo(FoodInfo foodInfo) {
+		this.foodInfo = foodInfo;
 	}
 	
 	

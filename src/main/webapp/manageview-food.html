@@ -5,37 +5,12 @@
 		<meta charset="utf-8">
 		<title></title>
 		<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+		<link rel="stylesheet" type="text/css" href="css/manageview-food.css">
+		
 		<script src="js/jquery-3.4.1.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
-		<script type="text/javascript">
-			$(function() {
-				// 公共部分main
-				$.getScript("js/main.js");
-				$("#nav-list").load("main.html .nav-list", function() {
-					$("#pageChineseName").html("菜品管理");
-				});
-				$("#nav-end").load("main.html .nav-end", function() {
-					$("#userName").html("豆腐");
-				});
-				// 公共部分--止
-				
-				$.ajax({
-					type:"post",
-					url:"getAllFood",
-					data:{},
-					dataType:"json",
-					success:function(data){
-						
-						console.log(data);
-						
-					}
-					
-				});
-				
-				
-				
-			})
-		</script>
+		<script type="text/javascript" src="js/manageview-food.js"></script>
+		
 	</head>
 	<body>
 		<!-- 导航栏 -->
@@ -46,18 +21,50 @@
 				<!-- 自定义导航栏组件 -->
 				<div id="differentPart">
 					<ul class="nav navbar-nav nav-pills">
-					<li class="active"><a href="#">所有食品<span class="sr-only">(current)</span></a></li>
-						<li><a href="#">肉类</a></li>
-						<li><a href="#">汤类</a></li>
-						<li><a href="#">酒水类</a></li>
+					<li class="active" id="all"><a href="javacript:void(0);" >所有食品<span class="sr-only">(current)</span></a></li>
+						<li id="hot"><a href="javacript:void(0);" >炒菜</a></li>
+						<li id="ice"><a href="javacript:void(0);" >凉菜</a></li>
+						<li id="sweet"><a href="javacript:void(0);" >甜点</a></li>
+						<li id="sope"><a href="javacript:void(0);" >汤类</a></li>
+						<li id="drink"><a href="javacript:void(0);">酒水类</a></li>
+						<li id="insert"><a href="javacript:void(0);">添加菜品</a>
 						</ul>
+					
 				</div>
 				<!-- 登出 -->
 				<div id="nav-end"></div>
 			</div>
 		</nav>
 		<!-- 主体 -->
-		<div id="main"></div>
-
+		<div id="main">
+			
+		</div>
+		<div id="insertfood">
+			<form id="f1" enctype="multipart/form-data">
+				
+				名称：<input type="text" name="fname" id="fname"/><br><br>
+				种类：<select id="kind" name="kind" id="kind"><option value="-1">------请选择------</option></select><br><br>
+				图片：<input type="file" name="ff" id="ff" accept=".jpg"/><br><br>
+				价格：<input type="text" name="price" id="price"/><br><br>
+				
+				<button type="button" id="subm" class="btn btn-primary">提交</button>
+				<input type="reset"  class="btn btn-primary">
+			</form>
+		</div>
+		<div id="updatefood">
+		<form id="f2" enctype="multipart/form-data">
+				<input type="hidden" name="id" id="id"/>
+				名称：<input type="text" name="fname" id="ufname"/><br><br>
+				种类：<input type="hidden" name="kind" id="ukind"><input type="text" id="ufkname" readonly="readonly"/><button type="button" class="btn btn-primary" id="changefoodkind">更改食物种类</button>
+				<select id="kind2" name="kind" id="kind"><option value="-1">------请选择------</option></select><br><br>
+				图片：<div id="upic"><input type="hidden" name="pic" id="uupic"></div><button type="button" class="btn btn-primary" id="changepic">更改图片</button>
+				<input type="file" name="ff" id="ff2" accept=".jpg"/><br><br>
+				价格：<input type="text" name="price" id="uprice"/><br><br>
+				
+				<button type="button" id="usubm" class="btn btn-primary">提交</button>
+				<input type="reset"  class="btn btn-primary">
+			</form>
+		</div>
+		
 	</body>
 </html>
