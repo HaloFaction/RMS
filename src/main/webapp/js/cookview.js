@@ -1,4 +1,9 @@
 ﻿$(function(){
+	
+	$.getScript("js/main.js");
+	$("#nav-list").load("main.html .nav-list", function() {
+		$("#pageChineseName").html("点菜分配视图");
+	});
 	// 获取跳转url地址中属性的函数 GetQueryString
 	function GetQueryString(name){
 	     var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
