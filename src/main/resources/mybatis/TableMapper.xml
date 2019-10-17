@@ -4,12 +4,43 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.res.model.mapper.TableMapper"  >
 	
-	<select id="selectTable" resultType="Table"   >
+	<!-- 增加餐桌 -->
+	<insert id="addTable" parameterType="Table">
+		insert into diningtable(tname,num,status,remark)
+		values(#{tname},#{num},#{status},#{remark})
+	</insert>
+	
+	<!-- 更新餐桌 -->
+	<update id="updateTable" parameterType="Table">
+		update diningtable set tname=#{tname},num=#{num},status=#{status},remark=#{remark}
+		where id=#{id}
+	</update>
 
+	<!-- 删除餐桌 -->
+<!-- 	<delete id="removeTable" parameterType="int">
+		delete from diningtable where id=#{id}
+	</delete> -->
+	
+	<!-- 删除单/多个餐桌 -->
+	<delete id="removeTable" parameterType="int">
+		delete from diningtable where id in 
+		<!-- collection="数组array,集合list"固定写法,而不是传参的ids -->
+		<foreach collection="array" item="id" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+	
+	<!-- 查找所有餐桌 -->
+	<select id="getTable" resultType="Table">
+		select * from diningtable
+	</select>
+		
+	<!-- 条件查询餐桌 -->
+	<select id="searchTable" parameterType="Table" resultType="Table">
+		select * from diningtable where tname regexp #{tname} and status regexp #{status}
+		<!--  and status regexp "^#{status}$" -->
 	</select>
 	
-	<delete id="removeTable" parameterType="int" >
-		
-	</delete>
+
 	
 </mapper>

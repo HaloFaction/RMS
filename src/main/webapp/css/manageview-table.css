@@ -4,3 +4,19 @@
 #removeModalTableName{
 	color: red;
 }
+/* 表格每列固定宽度 */
+table {
+	table-layout : automatic;
+}
+/* 表格隐藏多余内容 */
+table td{
+	max-width: 58px;
+	overflow: hidden;
+	text-overflow:ellipsis;
+	white-space: nowrap;
+}
+/* 表格隐藏部分, 鼠标hover能显示 */
+table td:hover {
+	overflow: auto;
+	white-space: pre-wrap;
+}
