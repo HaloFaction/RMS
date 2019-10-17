@@ -3,40 +3,165 @@
 <html>
 	<head>
 		<meta charset="utf-8">
-		<title></title>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>厨师视图-点菜分配视图</title>
 		<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+		<link rel="stylesheet" type="text/css" href="css/cooker.css" />
 		<script src="js/jquery-3.4.1.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
-		<script type="text/javascript">
-			$(function() {
-				// 公共部分main
-				$.getScript("js/main.js");
-				$("#nav-list").load("main.html .nav-list", function() {
-					$("#pageChineseName").html("点菜分配视图");
-				});
-				$("#nav-end").load("main.html .nav-end", function() {
-					$("#userName").html("豆腐");
-				});
-				// 公共部分--止
-			})
-		</script>
+		<script src="js/cookview.js" type="text/javascript" charset="utf-8"></script>
 	</head>
-	<body>
+	<body >
 		<!-- 导航栏 -->
 		<nav class="navbar navbar-default navbar-static-top">
 			<div class="container">
 				<!-- 列表 -->
-				<div id="nav-list"></div>
+				<div id="nav-list">
+					<a class="navbar-brand" href="#">点菜分配视图</a>
+				</div>
 				<!-- 自定义导航栏组件 -->
 				<div id="differentPart">
-					
+					<form class="navbar-form navbar-left">
+						<div class="form-group">
+						  <input type="text" class="form-control" id="kid" placeholder="厨位号" data-toggle="popover" data-placement="bottom" data-content="不存在此厨位" data-backdrop="static">
+						</div>
+						<button type="button"  id="ensureGetKitchen" class="btn btn-default" >查询厨位</button>
+					</form>
+					<ul class="nav navbar-nav">
+						<li><a href="#" id="getAllKitchens">显示所有厨位</a></li>
+						<li class="dropdown">
+						  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">更多功能 <span class="caret"></span></a>
+						  <ul class="dropdown-menu">
+							<li><a  data-toggle='modal' data-target='#addKitchen' href="#">添加厨位</a></li>
+							<li><a  data-toggle='modal' data-target='#deleteKitchen' href="#">删除厨位</a></li>
+							<li><a  data-toggle='modal' data-target='#updateKitchen' href="#">修改厨位</a></li>
+						  </ul>
+						</li>
+				  </ul>
 				</div>
 				<!-- 登出 -->
 				<div id="nav-end"></div>
 			</div>
 		</nav>
-		<!-- 主体 -->
-		<div></div>
-
+		<!-- 主体:弹性布局，子元素自动换行 -->
+		<div id="body" style="display:flex;flex-wrap:wrap;word-break:break-all;width:1300px;margin-left:100px;">
+		<!-- 此处添加全部厨位 -->
+		</div>
+		<!-- 根据不同的厨位显示不同的菜单:模态框 -->
+		<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" id="closeWindow" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h4 class="modal-title" id="myModalLabel">菜单信息</h4>
+		      </div>
+		      <div class="modal-body" id="menusList">
+		      <!-- 菜品列表 -->
+		      	<table class="table" id="menus">
+					<tr>
+						<th><button type="button" class="btn btn-primary" id="selectAll1">全选/全不选</button></th>
+						<th>菜品编号</th>
+						<th>菜品名称</th>
+						<th>状态</th>
+						<th></th>
+					</tr>
+		        </table>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-primary" id="completeCook" data-dismiss="modal">确认制作完成</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+		<!-- 对点菜分配的模态框 -->
+		<div class="modal fade bs-example-modal-lg" id="dispatcherModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" >
+		  <div class="modal-dialog modal-dialog modal-lg" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" id="closeWindow" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h4 class="modal-title" id="myModalLabel">菜单信息</h4>
+		      </div>
+		      <div class="modal-body" id="dispatcherBody">
+		      <!-- 菜品列表 -->
+		      	<table class="table" id="dispatcherMenuList">
+					<tr>
+						<th>订单编号</th>
+						<th>菜品编号</th>
+						<th>菜品名称</th>
+						<th>状态</th>
+						<th>数量</th>
+						<th>添加到厨位</th>
+					</tr>
+		        </table>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-primary" id="completeDispatching" data-dismiss="modal" data_kid="" >添加到厨位</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+		<!-- 添加厨位模态框 -->
+		<div class="modal fade" id="addKitchen" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" id="closeWindow" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h4 class="modal-title" id="myModalLabel">菜单信息</h4>
+		      </div>
+		      <div class="modal-body" id="menusList">
+		      	<form>
+		          <div class="form-group">
+		            <label for="exampleInputEmail1">厨位号(自动生成)：</label>
+		            <input type="text" class="form-control" id="addKname" readonly="readonly" placeholder="厨位号" style="width: 300px;">
+		          </div>
+				  <div class="form-group">
+				    <label for="exampleInputEmail1">选择使用者：</label>
+					<select class="form-control" id="cookerList" style="width: 300px;">
+						<option value="-1">---请选择---</option>
+					</select>
+					</div>
+		        </form>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-primary"  data-dismiss="modal"  id="ensureAddKitchen">确认添加</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+		<!-- 删除厨位模态框 -->
+		<div class="modal fade" id="deleteKitchen" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" id="closeWindow" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h4 class="modal-title" id="myModalLabel">菜单信息</h4>
+		      </div>
+		      <div class="modal-body" id="menusList">
+		      
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-primary" id="completeCook" data-dismiss="modal">确认制作完成</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+		<!--  修改厨位模态框 -->
+		<div class="modal fade" id="updateKitchen" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" id="closeWindow" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h4 class="modal-title" id="myModalLabel">菜单信息</h4>
+		      </div>
+		      <div class="modal-body" id="menusList">
+		      
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-primary" id="completeCook" data-dismiss="modal">确认制作完成</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
 	</body>
 </html>

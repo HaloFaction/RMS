@@ -16,6 +16,10 @@ public class Emp {
 	private Date hiredate;
 	private double sal;
 	private double comm;
+	
+	// 查询所有emp顺便带上user，可以判断user中role--修改人ylh
+	private User user;
+	
 	public int getId() {
 		return id;
 	}
@@ -94,4 +98,12 @@ public class Emp {
 	public void setComm(double comm) {
 		this.comm = comm;
 	}
+	public User getUser() {
+		return user;
+	}
+	public void setUser(User user) {
+		this.user = user;
+	}
+	
+	
 }
