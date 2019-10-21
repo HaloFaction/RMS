@@ -6,10 +6,13 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.res.model.bean.Emp;
 import com.res.model.bean.Kitchen;
 import com.res.model.bean.OrderMenu;
 import com.res.model.mapper.KitchenMapper;
+
 
 @Service
 public class KitchenService {
@@ -36,7 +39,7 @@ public class KitchenService {
 	public List<OrderMenu> getMenusByKid(int kid){
 		return kitchenMapper.getMenusByKid(kid);
 	}
-	
+	@Transactional
 	public void changeStatus(String[] ids){
 		// String数组转int数组
 		int[] integers = new int[ids.length];
@@ -47,11 +50,11 @@ public class KitchenService {
 		}
 		kitchenMapper.changeStatus(integers);
 	}
-	
+	@Transactional
 	public void deleteOrderMenu(int id){
 		kitchenMapper.deleteOrderMenu(id);
 	}
-	
+	@Transactional
 	public void addKitchen(String kname,int empid){
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("kname", kname);
@@ -62,7 +65,7 @@ public class KitchenService {
 	public List<OrderMenu> getOrderMenus(){
 		return kitchenMapper.getOrderMenus();
 	}
-	
+	@Transactional
 	public void updateOrderMenu(int kid,String[] ids,String[] nums){
 		// 编号的String数组转int数组
 		int[] integer1 = new int[ids.length];
